@@ -1,43 +1,84 @@
+import keyword_records
+import price_dist
+import review_sort
+import suburb_listing
+
 import tkinter as tk
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from pandas import DataFrame
 
 
-root = tk.Tk()
+class Menu:
 
-canvas1 = tk.Canvas(root, width=800, height=300)
-canvas1.pack()
+    def __init__(self, root):
 
-label1 = tk.Label(root, text='Airbnb Database')
-label1.config(font=('Arial', 20))
-canvas1.create_window(400, 50, window=label1)
+        self.canvas1 = tk.Canvas(root, width=800, height=600)
+        self.canvas1.pack()
+
+        self.label1 = tk.Label(root, text='Airbnb Database Viewer')
+        self.label1.config(font=('Arial', 20))
+        self.canvas1.create_window(400, 50, window=self.label1)
+
+        self.select_db = tk.Button(root, text='Select Database ', command=select_db, bg='palegreen2', font=('Arial', 11, 'bold'))
+        self.canvas1.create_window(400, 200, window=self.select_db)
+
+        self.close_p = tk.Button(root, text='Close Program ', command=root.destroy, bg='palegreen2', font=('Arial', 11, 'bold'))
+        self.canvas1.create_window(400, 500, window=self.close_p)
+
+        root.mainloop()
 
 
-button1 = tk.Button(root, text='Select Database ', command=None, bg='palegreen2', font=('Arial', 11, 'bold'))
-canvas1.create_window(400, 200, window=button1)
+class DBmenu:
+
+    def __init__(self, root):
+
+        self.canvas1 = tk.Canvas(root, width=800, height=600)
+        self.canvas1.pack()
+
+        self.label1 = tk.Label(root, text='Airbnb Database Viewer')
+        self.label1.config(font=('Arial', 20))
+        self.canvas1.create_window(400, 50, window=self.label1)
+
+        # Start Date
+        select_sd = tk.Button(root, text='Choose start date', command=None, bg='palegreen2',
+                                   font=('Arial', 11, 'bold'))
+        self.canvas1.create_window(350, 200, window=select_sd)
+        # End Date
+        select_ed = tk.Button(root, text='Choose end date', command=None, bg='palegreen2',
+                                   font=('Arial', 11, 'bold'))
+        self.canvas1.create_window(500, 200, window=select_ed)
+        # Cleanliness
+        select_clen = tk.Button(root, text='Sort by: Cleanliness', command=None, bg='palegreen2',
+                                   font=('Arial', 11, 'bold'))
+        self.canvas1.create_window(400, 300, window=select_clen)
+        # Highest Review Score
+        select_hr = tk.Button(root, text='Sort by: Highest review', command=None, bg='palegreen2',
+                                   font=('Arial', 11, 'bold'))
+        self.canvas1.create_window(400, 400, window=select_hr)
+        # Back to main
+        close_p = tk.Button(root, text='Back to main menu', command=back_to_menu, bg='palegreen2',
+                                 font=('Arial', 11, 'bold'))
+        self.canvas1.create_window(400, 500, window=close_p)
+
+        listbox_sd = tk.Listbox(root)
+        self.canvas1.create_window(100, 400, window=listbox_sd)
+
+        listbox_ed = tk.Listbox(root)
+        self.canvas1.create_window(700, 400, window=listbox_ed)
 
 
-xAxis = [float(1),float(2),float(3)]
-yAxis = [float(1),float(2),float(3)]
+def select_db():
+    for widget in root.winfo_children():
+        widget.pack_forget()
 
-# Pyplot
-figure1 = plt.Figure(figsize=(5,4), dpi=100)
-ax1 = figure1.add_subplot(111)
-ax1.scatter(xAxis,yAxis, color = 'b')
-scatter1 = FigureCanvasTkAgg(figure1, root)
-scatter1.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
-ax1.legend(['Pareto front'])
-ax1.set_xlabel(r'$f_1(x)$')
-ax1.set_ylabel(r'$f_2(x)$')
-ax1.set_title(r'Sample Scatter Plot')
+    db_menu = DBmenu(root)
+
+
+def back_to_menu():
+    for widget in root.winfo_children():
+        widget.pack_forget()
+
+    main_ = Menu(root)
 
 
 if __name__ == "__main__":
-
-    data1 = {'Suburb': ['test1','test2','test3','test4','test5'],
-             'Price': [45000,42000,52000,49000,47000]
-            }
-    df1 = DataFrame(data1,columns=['Suburb','Price'])
-
-    root.mainloop()
+    root = tk.Tk()
+    main_ = Menu(root)
