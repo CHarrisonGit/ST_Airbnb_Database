@@ -84,23 +84,26 @@ class DBmenu:
         canvas1.create_window(100, 140, window=search_key_button)
 
 
-class Listings:
-    def __init__(self, root, returns):
-        label = tk.Label(root, text="Listings", font=("Arial", 30)).grid(row=0, columnspan=3)
+def key_search(root,returns):
+    # Title
+    label = tk.Label(root, text="Listings", font=("Arial", 30)).grid(row=0, columnspan=3)
 
-        # create listings table
-        col_names = ('Listing ID', 'Name', 'Location', 'Room type', 'Price per night')
-        listBox = ttk.Treeview(root, columns=col_names, show='headings')
-        for col in col_names:
-            listBox.heading(col, text=col)
-        listBox.grid(row=1, column=0, columnspan=2)
+    # Bottom navigation
+    price_button = tk.Button(root, text="price chart", width=15).grid(row=4, column=1)
+    close_button = tk.Button(root, text="Close window", width=15, command=root.destroy).grid(row=4, column=1, sticky="e")
 
-        # Bottom navigation
-        showScores = tk.Button(root, text="price chart", width=15).grid(row=4, column=1)
-        closeButton = tk.Button(root, text="Back to main", width=15, command=exit).grid(row=4, column=1,sticky="e")
+    # create listings table
+    col_names = ('Listing ID', 'Name', 'Location', 'Room type', 'Price per night')
+    listBox = ttk.Treeview(root, columns=col_names, show='headings')
 
-        for i in returns:
-            listBox.insert("", "end", values=(i[0], i[1], i[5], i[8], i[9]))
+    for col in col_names:
+        listBox.heading(col, text=col)
+    listBox.grid(row=1, column=0, columnspan=2)
+
+    # Add data to table
+    for i in returns:
+        listBox.insert("", "end", values=(i[0], i[1], i[5], i[8], i[9]))
+
 
 def select_dbs():
     for widget in root.winfo_children():
@@ -110,10 +113,8 @@ def select_dbs():
 
 
 def select_listings(returns):
-    for widget in root.winfo_children():
-        widget.pack_forget()
-
-    listings_menu = Listings(root,returns)
+    listings_root = tk.Tk()
+    key_search(listings_root, returns)
 
 
 def back_to_menu():
