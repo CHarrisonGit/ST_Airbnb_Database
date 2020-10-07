@@ -45,32 +45,26 @@ class DBmenu:
         label1.config(font=('Arial', 20))
         canvas1.create_window(400, 50, window=label1)
 
-        # Start Date
-        select_sd = tk.Button(root, text='Choose start date', command=None, bg='palegreen2',
-                              font=('Arial', 11, 'bold'))
-        canvas1.create_window(350, 200, window=select_sd)
-        # End Date
-        select_ed = tk.Button(root, text='Choose end date', command=None, bg='palegreen2',
-                              font=('Arial', 11, 'bold'))
-        canvas1.create_window(500, 200, window=select_ed)
+        # Price
+        select_clen = tk.Button(root, text='Sort by: Price', command=self.sort_cleanliness, bg='palegreen2',
+                                font=('Arial', 11, 'bold'))
+        canvas1.create_window(400, 200, window=select_clen)
+        # Suburb
+        select_clen = tk.Button(root, text='Sort by: Suburb', command=self.sort_cleanliness, bg='palegreen2',
+                                font=('Arial', 11, 'bold'))
+        canvas1.create_window(400, 250, window=select_clen)
         # Cleanliness
         select_clen = tk.Button(root, text='Sort by: Cleanliness', command=self.sort_cleanliness, bg='palegreen2',
                                 font=('Arial', 11, 'bold'))
         canvas1.create_window(400, 300, window=select_clen)
         # Highest Review Score
-        select_hr = tk.Button(root, text='Sort by: Highest review', command=None, bg='palegreen2',
+        select_hr = tk.Button(root, text='Sort by: Review score', command=None, bg='palegreen2',
                               font=('Arial', 11, 'bold'))
-        canvas1.create_window(400, 400, window=select_hr)
+        canvas1.create_window(400, 350, window=select_hr)
         # Back to main
         close_p = tk.Button(root, text='Back to main menu', command=back_to_menu, bg='palegreen2',
                             font=('Arial', 11, 'bold'))
         canvas1.create_window(400, 500, window=close_p)
-
-        listbox_sd = tk.Listbox(root)
-        canvas1.create_window(100, 400, window=listbox_sd)
-
-        listbox_ed = tk.Listbox(root)
-        canvas1.create_window(700, 400, window=listbox_ed)
 
         # Keyword Search
         search_key = tk.Entry(root)
