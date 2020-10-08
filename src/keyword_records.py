@@ -4,8 +4,14 @@ import numpy as np
 import csv
 import datetime
 import pandas as pd
+from tkinter import messagebox as msg
+
 
 def keyword_search(keywords,start,end):
+    if keywords == "":
+        raise ValueError(msg.showerror(title="Search Error", message="Search field can not be empty"))
+    if start > end:
+        raise ValueError(msg.showerror(title="Date Error", message="You can not have end date before start date."))
     # Create workbook
     summary = open('DB Files/listings_summary_dec18.csv', mode='r', encoding='utf-8')
     csv_summary = csv.reader(summary)

@@ -2,10 +2,11 @@ from openpyxl import load_workbook
 import statistics
 import numpy as np
 import csv
-import tkinter as tk
 from tkinter import ttk
 from tkinter import *
+import tkinter as tk
 import tkcalendar
+
 from datetime import datetime as dt
 import datetime
 
@@ -88,11 +89,12 @@ class DBmenu:
         def search_keyword():
             keywords = str(search_key.get())
             start_date = self.start_cal.get_date()
-            date = pd.to_datetime(start_date)
             end_date = self.end_cal.get_date()
-            if not keywords == "":
-                returns = keyword_records.keyword_search(keywords, date, end_date)
-                select_listings(returns)
+            date1 = pd.to_datetime(start_date)
+            date2 = pd.to_datetime(end_date)
+
+            returns = keyword_records.keyword_search(keywords, date1, date2)
+            select_listings(returns)
 
         search_key_button = tk.Button(root, text='Search keyowords', command=search_keyword, bg='palegreen2',
                                       font=('Arial', 11, 'bold'))
