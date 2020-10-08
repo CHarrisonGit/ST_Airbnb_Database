@@ -5,6 +5,9 @@ import csv
 import tkinter as tk
 from tkinter import ttk
 from tkinter import *
+import tkcalendar
+from datetime import datetime as dt
+import datetime
 
 import keyword_records
 import price_dist
@@ -45,6 +48,18 @@ class DBmenu:
         label1.config(font=('Arial', 20))
         canvas1.create_window(400, 50, window=label1)
 
+        # Start Date
+        start_lbl = tk.Label(root, text="Start Date", font=("Arial", 10))
+        start_cal = tkcalendar.Calendar(root, font="Arial 5", selectmode='day', cursor="hand1", year=2019, month=2, day=5)
+        canvas1.create_window(100, 200, window=start_cal)
+        canvas1.create_window(100, 125, window=start_lbl)
+        # End Date
+        end_lbl = tk.Label(root, text="End Date", font=("Arial", 10))
+        end_cal = tkcalendar.Calendar(root, font="Arial 5", selectmode='day', cursor="hand1", year=2019, month=2, day=7)
+        canvas1.create_window(100, 400, window=end_cal)
+        canvas1.create_window(100, 325, window=end_lbl)
+
+
         # Price
         select_clen = tk.Button(root, text='Sort by: Price', command=self.sort_cleanliness, bg='palegreen2',
                                 font=('Arial', 11, 'bold'))
@@ -68,16 +83,20 @@ class DBmenu:
 
         # Keyword Search
         search_key = tk.Entry(root)
-        canvas1.create_window(100, 100, window=search_key)
+        canvas1.create_window(650, 100, window=search_key)
 
         def search_keyword():
             keywords = str(search_key.get())
-            returns = keyword_records.keyword_search(keywords)
-            select_listings(returns)
+            start_date = start_cal.get_date()
+            date = pd.to_datetime(start_date)
+            end_date = end_cal.get_date()
+            if not keywords == "":
+                returns = keyword_records.keyword_search(keywords, date, end_date)
+                select_listings(returns)
 
         search_key_button = tk.Button(root, text='Search keyowords', command=search_keyword, bg='palegreen2',
                                       font=('Arial', 11, 'bold'))
-        canvas1.create_window(100, 140, window=search_key_button)
+        canvas1.create_window(650, 140, window=search_key_button)
 
     # Cleanliness search function
     def sort_cleanliness(self):
@@ -136,20 +155,11 @@ class DBmenu:
         tk.Button(clean, text='Search', command=deploydf).pack(side='top')
 
 
-
-
-
-
-
-
-
-
 def key_search(root, returns):
     # Title
     label = tk.Label(root, text="Listings", font=("Arial", 30)).grid(row=0, columnspan=3)
 
     # Bottom navigation
-    price_button = tk.Button(root, text="price chart", width=15).grid(row=4, column=1)
     close_button = tk.Button(root, text="Close window", width=15, command=root.destroy).grid(row=4, column=1,
                                                                                              sticky="e")
 
