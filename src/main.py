@@ -6,6 +6,7 @@ from tkinter import ttk
 from tkinter import *
 import tkinter as tk
 import tkcalendar
+from tkinter import messagebox as msg
 
 from datetime import datetime as dt
 import datetime
@@ -27,7 +28,7 @@ class Menu:
         label1.config(font=('Arial', 20))
         canvas1.create_window(400, 50, window=label1)
 
-        select_db = tk.Button(root, text='Select Database ', command=select_dbs, bg='palegreen2',
+        select_db = tk.Button(root, text='Show Database ', command=select_dbs, bg='palegreen2',
                               font=('Arial', 11, 'bold'))
         canvas1.create_window(400, 200, window=select_db)
 
@@ -84,7 +85,8 @@ class DBmenu:
 
         # Keyword Search
         search_key = tk.Entry(root)
-        canvas1.create_window(650, 100, window=search_key)
+        search_key.insert(0,"pool")
+        canvas1.create_window(650, 100, window=search_key,)
 
         def search_keyword():
             keywords = str(search_key.get())
@@ -96,7 +98,7 @@ class DBmenu:
             returns = keyword_records.keyword_search(keywords, date1, date2)
             select_listings(returns)
 
-        search_key_button = tk.Button(root, text='Search keyowords', command=search_keyword, bg='palegreen2',
+        search_key_button = tk.Button(root, text='Search keyoword', command=search_keyword, bg='palegreen2',
                                       font=('Arial', 11, 'bold'))
         canvas1.create_window(650, 140, window=search_key_button)
 
@@ -260,6 +262,9 @@ class DBmenu:
 
 
 def key_search(root, returns):
+
+    if returns == 0:
+        pass
     # Title
     label = tk.Label(root, text="Listings", font=("Arial", 30)).grid(row=0, columnspan=3)
 
