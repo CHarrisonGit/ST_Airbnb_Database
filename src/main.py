@@ -301,6 +301,11 @@ def key_search(root, returns):
     # Add data to table
     for i in returns:
         listBox.insert("", "end", values=(i[0], i[4], i[23], i[52], str(i[60])))
+    # Gather data about return listings
+    listings_count = len(returns)
+    # Display data in window
+    total_lst = tk.Label(root, text=("Number of listings with keyword:   " + str(listings_count)), font=("Arial", 10)).grid(row=4, column=0,
+                                                                                              sticky='w')
 
 
 # Display Ratings listings
@@ -324,6 +329,7 @@ def ratings_search(root, returns):
     for i in returns:
         listBox.insert("", "end", values=(i[0], i[1], i[2], i[3], str(i[4])))
 
+    # Gather data about return listings
     listings_count = len(returns)
     upper = 0
     mid = 0
@@ -340,6 +346,7 @@ def ratings_search(root, returns):
         elif i[4] < 25:
             lowest += 1
 
+    # Display Data in window
     total_lst = tk.Label(root, text=("Total listings:   " + str(listings_count)), font=("Arial", 10)).grid(row=4, column=0,
                                                                                               sticky='w')
     upper_lst = tk.Label(root, text=("Review scores greater than 90:   " + str(upper)), font=("Arial", 10)).grid(row=5, column=0,
