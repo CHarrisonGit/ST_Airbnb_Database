@@ -66,18 +66,31 @@ class DBmenu:
         select_clen = tk.Button(root, text='Suburb Search', command=self.sort_suburb, bg='palegreen2',
                                 font=('Arial', 11, 'bold'))
         canvas1.create_window(400, 200, window=select_clen)
+
         # Suburb
         select_clen = tk.Button(root, text='Price Chart', command=self.pricechart, bg='palegreen2',
                                 font=('Arial', 11, 'bold'))
         canvas1.create_window(400, 250, window=select_clen)
+
         # Cleanliness
         select_clen = tk.Button(root, text='Sort by: Cleanliness', command=self.sort_cleanliness, bg='palegreen2',
                                 font=('Arial', 11, 'bold'))
         canvas1.create_window(400, 300, window=select_clen)
+
         # Highest Review Score
-        select_hr = tk.Button(root, text='Sort by: Review score', command=None, bg='palegreen2',
+        def search_review():
+            start_date = self.start_cal.get_date()
+            end_date = self.end_cal.get_date()
+            date1 = pd.to_datetime(start_date)
+            date2 = pd.to_datetime(end_date)
+
+            returns = review_sort.review_search(date1,date2)
+            select_review(returns)
+
+        select_hr = tk.Button(root, text='Sort by: Highest review', command=search_review, bg='palegreen2',
                               font=('Arial', 11, 'bold'))
         canvas1.create_window(400, 350, window=select_hr)
+
         # Back to main
         close_p = tk.Button(root, text='Back to main menu', command=back_to_menu, bg='palegreen2',
                             font=('Arial', 11, 'bold'))
@@ -267,10 +280,9 @@ class DBmenu:
         tk.Button(suburb, text='Search', command=deploydf).pack(side='top')
 
 
+# Display Keyword search listings
 def key_search(root, returns):
 
-    if returns == 0:
-        pass
     # Title
     label = tk.Label(root, text="Listings", font=("Arial", 30)).grid(row=0, columnspan=3)
 
@@ -291,6 +303,28 @@ def key_search(root, returns):
         listBox.insert("", "end", values=(i[0], i[4], i[23], i[52], str(i[60])))
 
 
+# Display Ratings listings
+def ratings_search(root, returns):
+
+    # Title
+    label = tk.Label(root, text="Listings", font=("Arial", 30)).grid(row=0, columnspan=3)
+
+    # Bottom navigation
+    close_button = tk.Button(root, text="Close window", width=15, command=root.destroy).grid(row=4, column=1,
+                                                                                             sticky="e")
+    # create listings table
+    col_names = ('Listing ID', 'Name', 'Location', 'Room type', 'Rating score')
+    listBox = ttk.Treeview(root, columns=col_names, show='headings')
+
+    for col in col_names:
+        listBox.heading(col, text=col)
+    listBox.grid(row=1, column=0, columnspan=2)
+
+    # Add data to table
+    for i in returns:
+        listBox.insert("", "end", values=(i[0], i[1], i[2], i[3], str(i[4])))
+
+
 def select_dbs():
     for widget in root.winfo_children():
         widget.pack_forget()
@@ -301,6 +335,11 @@ def select_dbs():
 def select_listings(returns):
     listings_root = tk.Tk()
     key_search(listings_root, returns)
+
+
+def select_review(returns):
+    listings_root = tk.Tk()
+    ratings_search(listings_root, returns)
 
 
 def back_to_menu():
