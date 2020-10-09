@@ -29,10 +29,10 @@ def review_search(start,end):
 
     np_listings = listing_final[["id","name","neighbourhood","room_type","review_scores_rating"]].to_numpy()
 
-    if len(returns) == 0:
+    if len(np_listings) == 0:
         raise LookupError(msg.showerror(title="Search Error", message="No search results found"))
     else:
-        return returns
+        return np_listings
 
 
 if __name__ == "__main__":
