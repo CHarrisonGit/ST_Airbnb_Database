@@ -324,6 +324,33 @@ def ratings_search(root, returns):
     for i in returns:
         listBox.insert("", "end", values=(i[0], i[1], i[2], i[3], str(i[4])))
 
+    listings_count = len(returns)
+    upper = 0
+    mid = 0
+    lower = 0
+    lowest = 0
+
+    for i in returns:
+        if i[4] > 90:
+            upper += 1
+        if 75 > i[4] > 50:
+            mid += 1
+        if 25 < i[4] < 50:
+            lower += 1
+        elif i[4] < 25:
+            lowest += 1
+
+    total_lst = tk.Label(root, text=("Total listings:   " + str(listings_count)), font=("Arial", 10)).grid(row=4, column=0,
+                                                                                              sticky='w')
+    upper_lst = tk.Label(root, text=("Review scores greater than 90:   " + str(upper)), font=("Arial", 10)).grid(row=5, column=0,
+                                                                                              sticky='w')
+    mid_lst = tk.Label(root, text=("Review scores between 50-75:   " + str(mid)), font=("Arial", 10)).grid(row=6, column=0,
+                                                                                              sticky='w')
+    lower_lst = tk.Label(root, text=("Review scores between 25-50:   "+ str(lower)), font=("Arial", 10)).grid(row=7, column=0,
+                                                                                              sticky='w')
+    lowest_lst = tk.Label(root, text="Review scores below 25:   "+ str(lowest), font=("Arial", 10)).grid(row=8, column=0,
+                                                                                              sticky='w')
+
 
 def select_dbs():
     for widget in root.winfo_children():
