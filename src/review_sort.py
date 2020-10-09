@@ -27,7 +27,7 @@ def review_search(start,end):
     listing_date = pd_listings[pd_listings.host_since > np_start].fillna(0)
     listing_final = listing_date.sort_values(by=['review_scores_rating'], ascending=False)
 
-    np_listings = listing_final[["id","name","neighbourhood","room_type","review_scores_rating"]].to_numpy()
+    np_listings = listing_final[["id","name","city","room_type","review_scores_rating"]].to_numpy()
 
     if len(np_listings) == 0:
         raise LookupError(msg.showerror(title="Search Error", message="No search results found"))
