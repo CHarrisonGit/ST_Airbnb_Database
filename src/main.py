@@ -120,14 +120,14 @@ class DBmenu:
 
         # Group by id, search for comments containing cleanliness keywords, count to new column 'count'
         self.df3['count'] = self.df3.groupby(['id_x'])['comments'].transform(
-            lambda x: x[x.str.contains('clean|tidy|neat|washed', case=False, na=False, regex=True)].count())
+            lambda x: x[x.str.contains('clean|cleanliness|tidy|tidiness|neat|washed|sanitised', case=False, na=False, regex=True)].count())
         # Group by neighbourhood, sort by count
         self.df4 = self.df3[['neighbourhood_cleansed', 'count']].groupby(
             ['neighbourhood_cleansed']).sum().sort_values('count', ascending=False)
 
         # Show dataframe in a frame
         frame = tk.LabelFrame(clean,
-                              text="Cleanliness Search - Cities with most customer mentioned cleanliness",
+                              text="Cleanliness Search - Cities ranked by most customer mentioned cleanliness",
                               padx=5, pady=5)
         frame.pack(side='bottom', padx=10, pady=10)
 
