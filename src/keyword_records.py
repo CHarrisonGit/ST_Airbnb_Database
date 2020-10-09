@@ -19,7 +19,6 @@ def keyword_search(keywords,start,end):
     # Load csv files
     date_cols = ["date"]
     pd_calendar = pd.read_csv('DB Files/calendar_dec18.csv', parse_dates=date_cols)
-    pd_summary = pd.read_csv('DB Files/listings_summary_dec18.csv')
     date_cols2 = ["host_since"]
     pd_listings = pd.read_csv('DB Files/listings_dec18.csv', parse_dates=date_cols2)
 
