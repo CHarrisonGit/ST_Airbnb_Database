@@ -52,12 +52,12 @@ class DBmenu:
 
         # Start Date
         start_lbl = tk.Label(root, text="Start Date", font=("Arial", 10))
-        self.start_cal = tkcalendar.Calendar(root, font="Arial 5", selectmode='day', cursor="hand1", year=2019, month=2, day=5)
+        self.start_cal = tkcalendar.Calendar(root, font="Arial 5", selectmode='day', cursor="hand1", year=2017, month=2, day=5)
         canvas1.create_window(100, 200, window=self.start_cal)
         canvas1.create_window(100, 125, window=start_lbl)
         # End Date
         end_lbl = tk.Label(root, text="End Date", font=("Arial", 10))
-        self.end_cal = tkcalendar.Calendar(root, font="Arial 5", selectmode='day', cursor="hand1", year=2019, month=2, day=7)
+        self.end_cal = tkcalendar.Calendar(root, font="Arial 5", selectmode='day', cursor="hand1", year=2017, month=2, day=7)
         canvas1.create_window(100, 400, window=self.end_cal)
         canvas1.create_window(100, 325, window=end_lbl)
 
