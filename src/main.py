@@ -288,7 +288,7 @@ def key_search(root, returns):
 
     # Add data to table
     for i in returns:
-        listBox.insert("", "end", values=(i[0], i[1], i[5], i[8], i[9]))
+        listBox.insert("", "end", values=(i[0], i[4], i[23], i[52], str(i[60])))
 
 
 def select_dbs():
