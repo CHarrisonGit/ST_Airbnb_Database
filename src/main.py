@@ -98,7 +98,7 @@ class DBmenu:
             returns = keyword_records.keyword_search(keywords, date1, date2)
             select_listings(returns)
 
-        search_key_button = tk.Button(root, text='Search keyoword', command=search_keyword, bg='palegreen2',
+        search_key_button = tk.Button(root, text='Search keyword', command=search_keyword, bg='palegreen2',
                                       font=('Arial', 11, 'bold'))
         canvas1.create_window(650, 140, window=search_key_button)
 
@@ -142,77 +142,83 @@ class DBmenu:
 
     #Price chart function
     def pricechart(self):
-            self.df1['price'] = self.df1['price'].str.replace(',', '')
-            self.df1['price'] = self.df1['price'].str.replace('$', '')
-            self.df1['price'] = self.df1['price'].astype('float')
-            prices = sorted(self.df1['price'].tolist())
-            price_range = []
+        # Change type to datetime
+        self.df1['host_since'] = pd.to_datetime(self.df1['host_since'])
+        # Get user input dates
+        mask = (self.df1['host_since'] > self.start_cal.get_date()) & (self.df1['host_since'] <= self.end_cal.get_date())
+        self.df1 = self.df1.loc[mask]
 
-            count1 = 0
-            for i in prices:
-                if i <= 100:
-                    count1 += 1
+        self.df1['price'] = self.df1['price'].str.replace(',', '')
+        self.df1['price'] = self.df1['price'].str.replace('$', '')
+        self.df1['price'] = self.df1['price'].astype('float')
+        prices = sorted(self.df1['price'].tolist())
+        price_range = []
 
-            count2 = 0
-            for i in prices:
-                if i > 100 and i <= 200:
-                    count2 += 1
+        count1 = 0
+        for i in prices:
+            if i <= 100:
+                count1 += 1
 
-            count3 = 0
-            for i in prices:
-                if i > 200 and i <= 300:
-                    count3 += 1
+        count2 = 0
+        for i in prices:
+            if i > 100 and i <= 200:
+                count2 += 1
 
-            count4 = 0
-            for i in prices:
-                if i > 300 and i <= 400:
-                    count4 += 1
+        count3 = 0
+        for i in prices:
+            if i > 200 and i <= 300:
+                count3 += 1
 
-            count5 = 0
-            for i in prices:
-                if i > 400 and i <= 500:
-                    count5 += 1
+        count4 = 0
+        for i in prices:
+            if i > 300 and i <= 400:
+                count4 += 1
 
-            count6 = 0
-            for i in prices:
-                if i > 500 and i <= 600:
-                    count6 += 1
+        count5 = 0
+        for i in prices:
+            if i > 400 and i <= 500:
+                count5 += 1
 
-            count7 = 0
-            for i in prices:
-                if i > 600 and i <= 700:
-                    count7 += 1
+        count6 = 0
+        for i in prices:
+            if i > 500 and i <= 600:
+                count6 += 1
 
-            count8 = 0
-            for i in prices:
-                if i > 700 and i <= 800:
-                    count8 += 1
+        count7 = 0
+        for i in prices:
+            if i > 600 and i <= 700:
+                count7 += 1
 
-            count9 = 0
-            for i in prices:
-                if i > 800 and i <= 900:
-                    count9 += 1
+        count8 = 0
+        for i in prices:
+            if i > 700 and i <= 800:
+                count8 += 1
 
-            count10 = 0
-            for i in prices:
-                if i > 900 and i <= 1000:
-                    count10 += 1
+        count9 = 0
+        for i in prices:
+            if i > 800 and i <= 900:
+                count9 += 1
 
-            count11 = 0
-            for i in prices:
-                if i > 1000:
-                    count11 += 1
+        count10 = 0
+        for i in prices:
+            if i > 900 and i <= 1000:
+                count10 += 1
 
-            price_range.extend((count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11))
+        count11 = 0
+        for i in prices:
+            if i > 1000:
+                count11 += 1
 
-            #PLOT
-            plt.figure(figsize=(11, 6))
-            plt.plot(['0-100','100-200','200-300','300-400','400-500','500-600','600-700','700-800','800-900','900-1000','1000+'], price_range)
-            plt.title('Sydney Airbnb Price Distribution')
-            plt.xlabel('Price Range (AUD)')
-            plt.ylabel('Number of listings')
-            plt.grid()
-            plt.show()
+        price_range.extend((count1, count2, count3, count4, count5, count6, count7, count8, count9, count10, count11))
+
+        #PLOT
+        plt.figure(figsize=(11, 6))
+        plt.plot(['0-100','100-200','200-300','300-400','400-500','500-600','600-700','700-800','800-900','900-1000','1000+'], price_range)
+        plt.title('Sydney Airbnb Price Distribution')
+        plt.xlabel('Price Range Per Night (AUD)')
+        plt.ylabel('Number of listings')
+        plt.grid()
+        plt.show()
 
     #Suburb search function
     def sort_suburb(self):
